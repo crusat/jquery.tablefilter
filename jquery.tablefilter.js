@@ -30,11 +30,16 @@
                         input_text = input_text.toLowerCase();
                     }
 
-                    if (tr_text.indexOf(input_text) != -1) {
+                    if ($(this).attr('data-tablefilter-ignore') == 1) {
                         $(this).show();
                     } else {
-                        $(this).hide();
+                        if (tr_text.indexOf(input_text) != -1) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
                     }
+
                 });
             });
 

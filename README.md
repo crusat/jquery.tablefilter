@@ -17,3 +17,6 @@ Using:
         table: '#myTable',
         ignoreLetterCase: false
     });
+
+    // You can use data-tablefilter-ignore="1" for ignoring rows
+    <tr data-tablefilter-ignore="1">...</tr>
