@@ -20,27 +20,36 @@
             ignoreLetterCase: true
         }, options);
 
-        return this.each(function() {
-            $(this).keyup(function(){
-                $(settings.table+' tbody tr').each(function() {
-                    var tr_text = $(this).text();
-                    var input_text = $(that).val();
-                    if (settings.ignoreLetterCase) {
-                        tr_text = tr_text.toLowerCase();
-                        input_text = input_text.toLowerCase();
-                    }
+        var filterIt = function() {
+            $(settings.table+' tbody tr').each(function() {
+                var tr_text = $(this).text();
+                var input_text = $(that).val();
+                if (settings.ignoreLetterCase) {
+                    tr_text = tr_text.toLowerCase();
+                    input_text = input_text.toLowerCase();
+                }
 
-                    if ($(this).attr('data-tablefilter-ignore') == 1) {
+                if ($(this).attr('data-tablefilter-ignore') == 1) {
+                    $(this).show();
+                } else {
+                    if (tr_text.indexOf(input_text) != -1) {
                         $(this).show();
                     } else {
-                        if (tr_text.indexOf(input_text) != -1) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
+                        $(this).hide();
                     }
+                }
 
-                });
+            });
+        }
+
+        return this.each(function() {
+            $(this).keyup(function(){
+                filterIt();
+            });
+            $(this).on('paste', function(){
+                setTimeout(function() {
+                    filterIt();
+                }, 50);
             });
 
         });
